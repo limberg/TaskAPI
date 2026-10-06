@@ -1,0 +1,12 @@
+__pycache__
+.pytest_cache/
+.pytest_cache
+*.pyc
+*.pyo
+venv
+tasks.db
+*.db
+.vscode/
+.idea/
+*.log
+
