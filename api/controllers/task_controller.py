@@ -98,7 +98,8 @@ def marcar_completada(
     return task_response
 
     
-@router.delete("/{task_id}/eliminar", response_model=TaskResponse)
+@router.delete("/{task_id}/eliminar",  
+               status_code=status.HTTP_204_NO_CONTENT)
 def eliminar_tarea(
             task_id:int, 
             task_manager: 
@@ -107,20 +108,9 @@ def eliminar_tarea(
 
     logger.info("Eliminando tarea: %s", task_id)
 
-    task = task_manager.delete_task(task_id)
+    task_manager.delete_task(task_id)
 
-    logger.info("Tarea eliminada: %s", task.id)
-
-    task_response = TaskResponse(
-                        id=task.id, 
-                        titulo=task.titulo, 
-                        contenido=task.contenido, 
-                        deadline=task.deadline,
-                        completada=task.completada,
-                        fecha_creacion=task.fecha_creacion
-                    )
-    
-    return task_response
+    logger.info("Tarea eliminada: %s", task_id)
 
 @router.get("/")
 def root():
