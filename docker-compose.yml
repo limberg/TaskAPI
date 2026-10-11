@@ -1,0 +1,46 @@
+# Docker Compose moderno - No se requiere el campo 'version'
+
+services:
+  # TODO: Definir servicio de aplicación FastAPI
+  api:
+    build:
+      context: .
+      dockerfile: dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - DATABASE_URL=postgresql://fastapi_user:mi_password@db:5432/mydb
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - app-network
+    restart: unless-stopped
+
+  # TODO: Definir servicio de base de datos
+  db:
+    image: postgres:16-alpine
+    environment:
+      - POSTGRES_USER=fastapi_user
+      - POSTGRES_PASSWORD=mi_password
+      - POSTGRES_DB=mydb
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U fastapi_user -d mydb"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+# TODO: Definir red personalizada
+networks:
+  app-network:
+    driver: bridge
+
+# TODO: Definir volumen con nombre personalizado
+volumes:
+  db_data:
+    name: my_database_volume
