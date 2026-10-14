@@ -41,3 +41,7 @@ class TaskRepository:
         self.db.delete(task)
         self.db.commit()
         return task
+
+    def get_tasks(self):
+            """Obtiene todas las tareas de la base de datos y devuelve una lista de tareas."""
+            return self.db.query(Task).all()

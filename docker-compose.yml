@@ -1,7 +1,7 @@
-# Docker Compose moderno - No se requiere el campo 'version'
+# Docker Compose file para la aplicación FastAPI y PostgreSQL
 
 services:
-  # TODO: Definir servicio de aplicación FastAPI
+  # Definir servicio de aplicación FastAPI
   api:
     build:
       context: .
@@ -17,7 +17,7 @@ services:
       - app-network
     restart: unless-stopped
 
-  # TODO: Definir servicio de base de datos
+  # Definir servicio de base de datos
   db:
     image: postgres:16-alpine
     environment:
@@ -35,12 +35,12 @@ services:
       timeout: 5s
       retries: 5
 
-# TODO: Definir red personalizada
+# Definir red personalizada
 networks:
   app-network:
     driver: bridge
 
-# TODO: Definir volumen con nombre personalizado
+# Definir volumen con nombre personalizado
 volumes:
   db_data:
     name: my_database_volume

@@ -5,6 +5,21 @@ from datetime import date, timedelta
 
 BASE_URL = "http://localhost:8000"
 
+def test_obtener_tareas(client):
+    print("\nProbando obtención de tareas...")
+    response = client.get(f"/tasks/")
+
+    assert response.status_code == 200
+    print(f"Tareas obtenidas exitosamente: {response.json()}")
+
+def test_obtener_tareas_caducadas(client):
+    print("\nProbando obtención de tareas caducadas...")
+    response = client.get(f"/tasks/caducadas")
+
+    assert response.status_code == 200
+    print(f"Tareas caducadas obtenidas exitosamente: {response.json()}")
+
+
 def test_obtener_tareas_caducadas(client):
     print("\nProbando obtención de tareas caducadas...")
     response = client.get(f"/tasks/caducadas")
@@ -87,5 +102,6 @@ if __name__ == "__main__":
     test_obtener_tareas_caducadas()
     test_datos_incorrectos()
     test_eliminar_tarea()
+    test_obtener_tareas()
 
     print("\nTests completados")

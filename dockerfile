@@ -1,27 +1,24 @@
 # Crear Dockerfile para la aplicación FastAPI
 FROM python:3.11-slim
 
-#Crear usuario no-root para seguridad
+# Crear usuario no-root para seguridad
 RUN useradd -m -u 1000 appuser
 
 #Establecer directorio de trabajo
 WORKDIR /app
 
-# TODO: Instalar dependencias del sistema necesarias (gcc, postgresql-client)
-# RUN apt-get update && apt-get install -y gcc
-
-#Copiar requirements.txt e instalar dependencias Python
+# Copiar requirements.txt e instalar dependencias Python
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-#Copiar código de la aplicación
+# Copiar código de la aplicación
 COPY ./api ./api
 
-#Cambiar ownership y usuario
+# Cambiar ownership y usuario
 RUN chown -R appuser:appuser /app
 USER appuser
 
-#Exponer puerto 8080
+# Exponer puerto 8080
 EXPOSE 8080
 
 #Ejecutar aplicación con uvicorn

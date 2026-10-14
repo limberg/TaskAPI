@@ -17,6 +17,25 @@ router = APIRouter(
 
 logger = logging.getLogger(__name__)
 
+@router.get("/", response_model=list[TaskResponse])
+def obtener_tareas(
+    task_manager: TaskManager = Depends(get_task_manager)):
+    """Obtiene todas las tareas y devuelve una lista de TaskResponse."""
+    
+    logger.info("Obteniendo tareas")
+
+    tasks = task_manager.get_tasks()
+    return [
+            TaskResponse(
+                    id=task.id, 
+                    titulo=task.titulo, 
+                    contenido=task.contenido, 
+                    deadline=task.deadline,
+                    completada=task.completada,
+                    fecha_creacion=task.fecha_creacion
+                ) for task in tasks
+        ]
+
 @router.get("/caducadas", response_model=list[TaskResponse])
 def obtener_tareas_caducadas(
     task_manager: TaskManager = Depends(get_task_manager)):
@@ -111,8 +130,3 @@ def eliminar_tarea(
     task_manager.delete_task(task_id)
 
     logger.info("Tarea eliminada: %s", task_id)
-
-@router.get("/")
-def root():
-    """Ruta raíz de la API de gestión de tareas."""
-    return {"message": "Task Management API"}

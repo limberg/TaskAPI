@@ -76,3 +76,8 @@ class TaskManager:
         task = self.repository.delete(task)
 
         return task
+
+    def get_tasks(self):
+            """Obtiene todas las tareas del repositorio y devuelve una lista de tareas."""
+            tasks = self.repository.get_tasks()
+            return tasks
