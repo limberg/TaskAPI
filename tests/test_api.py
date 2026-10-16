@@ -76,7 +76,7 @@ def test_eliminar_tarea(client, crear_tarea):
     
     task_id = crear_tarea["id"]
 
-    response = client.delete(f"/tasks/{task_id} /eliminar")
+    response = client.delete(f"/tasks/{task_id}")
 
     assert response.status_code == 204
 

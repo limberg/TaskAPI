@@ -117,7 +117,7 @@ def marcar_completada(
     return task_response
 
     
-@router.delete("/{task_id}/eliminar",  
+@router.delete("/{task_id}",  
                status_code=status.HTTP_204_NO_CONTENT)
 def eliminar_tarea(
             task_id:int, 
